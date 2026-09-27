@@ -16,7 +16,7 @@ const config: QuartzConfig = {
     locale: "en-US",
     // USERNAME is replaced by the GitHub repo owner in .github/workflows/deploy.yml
     baseUrl: "USERNAME.github.io/dutch-journey",
-    ignorePatterns: ["99 Meta", "private", ".obsidian", ".quartz", "README.md"],
+    ignorePatterns: ["99 Meta", "**/private", ".obsidian", ".quartz", "README.md"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",

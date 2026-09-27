@@ -1,7 +1,7 @@
 # Dutch Journey - Obsidian vault
 
 Obsidian vault for learning Dutch, published as a website with [Quartz](https://quartz.jzhao.xyz) on GitHub Pages.
-Site: `https://<username>.github.io/dutch-journey/`
+Site: https://xnicklaj.github.io/dutch-journey/
 
 ## Structure
 
@@ -18,21 +18,21 @@ Site: `https://<username>.github.io/dutch-journey/`
 | `08 Resources` | Apps, books, podcasts, videos | Resource |
 | `99 Meta` | Templates and attachments (not published) | - |
 
-Insert a template: command palette → **Templates: Insert template**. Daily note: **Daily notes: Open today's daily note**.
+Insert a template: command palette → **Templates: Insert template**. Daily note: **Daily notes: Open today's daily note**, or click a day in the Calendar.
 
 ## Plugins
 
-Core plugins (already enabled in `.obsidian/`): Templates, Daily notes, Backlinks, Graph view, Properties, Bookmarks, Outline.
+Core plugins (enabled in `.obsidian/`): Templates, Daily notes, Backlinks, Graph view, Properties, Bookmarks, Outline.
 
-Community plugins (Settings → Community plugins → Browse):
+Community plugins are installed in `.obsidian/plugins/` and preconfigured (settings are each plugin's `data.json`):
 
-| Plugin | Why |
-| --- | --- |
-| **Git** (Vinzent03) | Auto commit + push every N minutes, so the website updates without a terminal. Also works on mobile. |
-| **Spaced Repetition** | Review flashcards. Every Word/Verb/Phrase note has a `word::meaning` line under a `#flashcards` heading. |
-| **LanguageTool** | Dutch spelling and grammar check while writing practice texts. |
-| **Dataview** | Tables inside Obsidian, e.g. all `het` words or all irregular verbs. Queries show as code blocks on the website. |
-| **Calendar** | Click through daily notes by date. |
+| Plugin | Why | Configured |
+| --- | --- | --- |
+| **Git** (Vinzent03) | Auto commit + push, so the website updates without a terminal. Also works on mobile. | Commit and sync 10 min after you stop editing; pull on startup; merge (not rebase, which mobile does not support). |
+| **Spaced Repetition** | Review flashcards. Every Word/Verb/Phrase note has a `word::meaning` line under a `#flashcards` heading. | One deck (`#flashcards`); `99 Meta` ignored so templates don't create cards; sibling cards buried; note-review pane off. Review data is stored as comments inside each note. |
+| **LanguageTool** | Dutch spelling and grammar check while writing practice texts. | Language fixed to Dutch (nl-NL), mother tongue English (enables English–Dutch false-friend warnings); manual check only (ribbon icon or **LanguageTool: Check text**), because auto-check would flag the English in every note. Uses the public server, so checked text is sent to languagetool.org. |
+| **Dataview** | Tables inside Obsidian, e.g. all `het` words or all irregular verbs. Queries show as code blocks on the website. | Dates as `yyyy-MM-dd`; DataviewJS off. |
+| **Calendar** | Click through daily notes by date. | Week starts Monday; uses the Daily notes folder, format, and template. |
 
 Example Dataview query (all `het` words):
 
@@ -46,7 +46,7 @@ Optional later: Templater (if you want prompts or scripted templates).
 
 ## Publishing
 
-The workflow in `.github/workflows/deploy.yml` builds the site on every push to `main`. It clones Quartz v4.5.2, copies the vault into Quartz `content/`, applies `.quartz/quartz.config.ts`, and deploys to GitHub Pages. Excluded from the site: `99 Meta`, `.obsidian`, this README, any folder named `private`, and notes with `draft: true` in their properties.
+The workflow in `.github/workflows/deploy.yml` builds the site on every push to `main`. It clones Quartz v4.5.2, copies the vault into Quartz `content/`, applies `.quartz/quartz.config.ts`, and deploys to GitHub Pages. Excluded from the site: `99 Meta`, `.obsidian`, this README, any folder named `private` (at any depth), and notes with `draft: true` in their properties.
 
 **The website is public.** Put anything personal in a `private` folder or set `draft: true`.
 
@@ -54,16 +54,18 @@ One-time setup:
 1. Create an empty public repo named `dutch-journey` on github.com (no README).
 2. Push this vault:
    ```bash
-   git remote add origin https://github.com/<username>/dutch-journey.git
+   git remote add origin https://github.com/xNicklaj/dutch-journey.git
    git push -u origin main
    ```
 3. Repo → Settings → Pages → Build and deployment → Source: **GitHub Actions**.
 4. Repo → Actions → re-run the workflow if the first run failed before step 3.
 
-Preview locally (optional, needs Node 22+):
+Preview locally (optional, needs Node 22+). Run from the vault folder; Quartz is cloned next to it:
 ```bash
 git clone --depth 1 --branch v4.5.2 https://github.com/jackyzha0/quartz.git ../quartz
 cd ../quartz && npm ci
-cp -r ../Dutch/. content/ && cp ../Dutch/.quartz/quartz.config.ts .
+rm -rf content && mkdir content
+cp -r ../dutch-journey/. content/ && cp ../dutch-journey/.quartz/quartz.config.ts .
 npx quartz build --serve
 ```
+To refresh the preview later, rerun the last three lines from `../quartz`.

@@ -13,7 +13,7 @@ Dutch has two definite articles: **de** (common gender) and **het** (neuter). Le
 - About 2/3 of nouns take **de**
 
 ## Examples
-- de man, de vrouw, het kind, het [[huis]] — *the man, the woman, the child, the house*
+- de [[man]], de [[vrouw]], het [[kind]], het [[huis]] — *the man, the woman, the child, the house*
 
 ## Common mistakes
 - Using *het* with a plural: ~~het huizen~~ → de huizen
